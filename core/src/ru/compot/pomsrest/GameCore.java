@@ -49,5 +49,6 @@ public class GameCore extends Game {
 
     @Override
     public void dispose() {
+        assetManager.dispose();
     }
 }
