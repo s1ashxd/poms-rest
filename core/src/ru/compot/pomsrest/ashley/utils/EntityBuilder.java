@@ -5,14 +5,12 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 import ru.compot.pomsrest.ashley.components.BoundsComponent;
-import ru.compot.pomsrest.ashley.components.StateComponent;
 import ru.compot.pomsrest.ashley.components.TextureComponent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class EntityBuilder {
 

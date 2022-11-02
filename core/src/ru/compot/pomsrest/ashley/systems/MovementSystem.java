@@ -8,8 +8,6 @@ import ru.compot.pomsrest.ashley.components.StateComponent;
 import ru.compot.pomsrest.ashley.constants.Mappers;
 import ru.compot.pomsrest.ashley.constants.Priorities;
 
-import java.util.Map;
-
 public class MovementSystem extends IteratingSystem {
 
     public MovementSystem() {

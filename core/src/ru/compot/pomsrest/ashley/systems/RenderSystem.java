@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import ru.compot.pomsrest.ashley.components.BoundsComponent;
 import ru.compot.pomsrest.ashley.components.TextureComponent;
 import ru.compot.pomsrest.ashley.constants.Mappers;
