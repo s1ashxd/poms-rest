@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.components;
+package ru.compot.pomsrest.ashley.components.texture;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,22 +8,29 @@ import com.badlogic.gdx.utils.Pool;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnimationComponent implements Component, Pool.Poolable {
+public class TextureAnimationComponent implements Component, Pool.Poolable {
 
-    public final Map<String, AnimationData> animations = new HashMap<>();
-    public AnimationData currentAnimationData, lastAnimationData;
+    public final Map<Integer, AnimationData> animations = new HashMap<>();
+    public Animation<TextureRegion> currentAnimation;
+    public TextureRegion idleTexture;
     public float estimatedTime;
     public boolean looping;
 
-    public void start(String id, boolean looping) {
+    public void animate(int id, boolean looping) {
         this.reset();
-        this.currentAnimationData = this.lastAnimationData = animations.get(id);
+        AnimationData data = animations.get(id);
+        this.currentAnimation = data.animation;
+        this.idleTexture = data.idleTexture;
         this.looping = looping;
+    }
+
+    public void add(int id, Animation<TextureRegion> region, TextureRegion idleTexture) {
+        animations.put(id, new AnimationData(region, idleTexture));
     }
 
     @Override
     public void reset() {
-        currentAnimationData = null;
+        currentAnimation = null;
         estimatedTime = 0;
         looping = false;
     }

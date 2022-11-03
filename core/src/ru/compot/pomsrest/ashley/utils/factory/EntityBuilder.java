@@ -1,12 +1,12 @@
-package ru.compot.pomsrest.ashley.utils;
+package ru.compot.pomsrest.ashley.utils.factory;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import ru.compot.pomsrest.ashley.components.BoundsComponent;
-import ru.compot.pomsrest.ashley.components.TextureComponent;
+import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
+import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class EntityBuilder {
 
     public EntityBuilder(Engine engine) {
         this.engine = engine;
-        this.components.add(new BoundsComponent());
+        this.components.add(new TransformComponent());
     }
 
     public static EntityBuilder create(Engine engine) {
@@ -27,12 +27,14 @@ public class EntityBuilder {
     }
 
     public EntityBuilder setPosition(float x, float y) {
-        createComponent(BoundsComponent.class).position.set(x, y);
+        TransformComponent tc = createComponent(TransformComponent.class);
+        tc.x = x;
+        tc.y = y;
         return this;
     }
 
     public EntityBuilder setSize(float width, float height) {
-        BoundsComponent bc = createComponent(BoundsComponent.class);
+        TransformComponent bc = createComponent(TransformComponent.class);
         bc.width = width;
         bc.height = height;
         return this;
@@ -59,10 +61,14 @@ public class EntityBuilder {
         return this;
     }
 
+    public <T extends Component> EntityBuilder addComponent(Class<T> clazz) {
+        createComponent(clazz);
+        return this;
+    }
+
     public <T extends Component> EntityBuilder addComponent(Class<T> clazz, Consumer<T> applier) {
-        T component = engine.createComponent(clazz);
+        T component = createComponent(clazz);
         applier.accept(component);
-        components.add(component);
         return this;
     }
 

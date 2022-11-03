@@ -2,22 +2,27 @@ package ru.compot.pomsrest.screens;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import ru.compot.pomsrest.GameCore;
-import ru.compot.pomsrest.ashley.components.AnimationComponent;
-import ru.compot.pomsrest.ashley.components.BoundsComponent;
-import ru.compot.pomsrest.ashley.components.StateComponent;
+import ru.compot.pomsrest.ashley.components.PlayerComponent;
+import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
+import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
+import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
+import ru.compot.pomsrest.ashley.constants.AnimationIDs;
+import ru.compot.pomsrest.ashley.constants.Assets;
 import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.systems.AnimationSystem;
-import ru.compot.pomsrest.ashley.systems.DebugRenderSystem;
-import ru.compot.pomsrest.ashley.systems.MovementSystem;
-import ru.compot.pomsrest.ashley.systems.RenderSystem;
-import ru.compot.pomsrest.ashley.utils.EntityBuilder;
-import ru.compot.pomsrest.assets.AssetConstants;
+import ru.compot.pomsrest.ashley.constants.OtherConstants;
+import ru.compot.pomsrest.ashley.constants.enums.TransformAnimationType;
+import ru.compot.pomsrest.ashley.systems.CollisionSystem;
+import ru.compot.pomsrest.ashley.systems.animations.TextureAnimationSystem;
+import ru.compot.pomsrest.ashley.systems.animations.TransformAnimationSystem;
+import ru.compot.pomsrest.ashley.systems.render.DebugRenderSystem;
+import ru.compot.pomsrest.ashley.systems.render.RenderSystem;
+import ru.compot.pomsrest.ashley.utils.factory.EntityFactory;
 
 public class GameScreen extends StageScreen {
 
@@ -26,79 +31,64 @@ public class GameScreen extends StageScreen {
     private final PooledEngine engine = new PooledEngine();
 
     public GameScreen() {
+        EntityFactory.createGroundEntity(engine, WORLD_WIDTH, GROUND_HEIGHT);
+        TextureAtlas playerAtlas = GameCore.getAsset(Assets.PLAYER_LLAMA);
+        Entity player = EntityFactory.createPlayerEntity(
+                engine,
+                10f, GROUND_HEIGHT,
+                playerAtlas.findRegion(Assets.RIGHT_IDLE_REGION),
+                playerAtlas.findRegion(Assets.LEFT_IDLE_REGION),
+                playerAtlas.findRegion(Assets.ENTERING_IDLE_REGION),
+                playerAtlas.findRegions(Assets.RIGHT_RUNNING_REGIONS),
+                playerAtlas.findRegions(Assets.LEFT_RUNNING_REGIONS),
+                playerAtlas.findRegions(Assets.ENTERING_REGIONS)
+        );
+        EntityFactory.createInteractArea(
+                engine,
+                200f, GROUND_HEIGHT,
+                160f, 200f,
+                () -> Gdx.app.log("DEBUG", "Interact with Lobster")
+        );
         engine.addSystem(new DebugRenderSystem());
-        engine.addSystem(new RenderSystem());
-        engine.addSystem(new MovementSystem());
-        engine.addSystem(new AnimationSystem());
-        EntityBuilder.create(engine)
-                .setSize(WORLD_WIDTH, GROUND_HEIGHT)
-                .setTexture(GameCore.getAsset(AssetConstants.BACKGROUND))
-                .build();
-        TextureAtlas playerAtlas = GameCore.getAsset(AssetConstants.PLAYER_LLAMA);
-        Entity player = EntityBuilder.create(engine)
-                .setPosition(10f, GROUND_HEIGHT)
-                .setSize(70f, 70f)
-                .setTextureRegion(playerAtlas.findRegion(AssetConstants.RIGHT_IDLE_REGION))
-                .setTextureSize(70f, 70f)
-                .addComponent(StateComponent.class, sc -> {
-                    sc.movePositionX = 10f;
-                    sc.speed = 200f;
-                })
-                .addComponent(AnimationComponent.class, ac -> {
-                    ac.animations.put(
-                            "RIGHT_RUNNING",
-                            new AnimationComponent.AnimationData(
-                                    new Animation<>(
-                                            .3f,
-                                            playerAtlas.findRegions(AssetConstants.RIGHT_RUNNING_REGIONS)
-                                    ),
-                                    playerAtlas.findRegion(AssetConstants.RIGHT_IDLE_REGION)
-                            )
-                    );
-                    ac.animations.put(
-                            "LEFT_RUNNING",
-                            new AnimationComponent.AnimationData(
-                                    new Animation<>(
-                                            .3f,
-                                            playerAtlas.findRegions(AssetConstants.LEFT_RUNNING_REGIONS)
-                                    ),
-                                    playerAtlas.findRegion(AssetConstants.LEFT_IDLE_REGION)
-                            )
-                    );
-                })
-                .build();
+        engine.addSystem(new RenderSystem(batch));
+        engine.addSystem(new TextureAnimationSystem());
+        engine.addSystem(new TransformAnimationSystem());
+        engine.addSystem(new CollisionSystem(player));
         stage.addListener(new InputListener() {
             private int keyPressed;
 
             @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                StateComponent sc = Mappers.STATE_MAPPER.get(player);
-                AnimationComponent ac = Mappers.ANIMATION_MAPPER.get(player);
-                if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-                    sc.movePositionX = 0;
-                    keyPressed = keycode;
-                    ac.start("LEFT_RUNNING", true);
-                    return true;
-                } else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-                    sc.movePositionX = 3332;
-                    keyPressed = keycode;
-                    ac.start("RIGHT_RUNNING", true);
-                    return true;
+            public boolean keyUp(InputEvent event, int keycode) {
+                if (keyPressed != keycode) {
+                    keyPressed = 0;
+                    return false;
                 }
-                return false;
+                Mappers.TRANSFORM_ANIMATION_MAPPER.get(player).reset();
+                Mappers.TEXTURE_ANIMATION_MAPPER.get(player).reset();
+                return true;
             }
 
             @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == keyPressed) {
-                    StateComponent sc = Mappers.STATE_MAPPER.get(player);
-                    BoundsComponent bc = Mappers.BOUNDS_MAPPER.get(player);
-                    AnimationComponent ac = Mappers.ANIMATION_MAPPER.get(player);
-                    sc.movePositionX = bc.position.x;
-                    ac.reset();
+            public boolean keyDown(InputEvent event, int keycode) {
+                PlayerComponent playerData = Mappers.PLAYER_MAPPER.get(player);
+                if (keycode == Input.Keys.SPACE) {
+                    playerData.interactRequested = true;
                     return true;
                 }
-                return false;
+                if (playerData.moveBlocked || (keycode != Input.Keys.LEFT && keycode != Input.Keys.RIGHT)) return false;
+                TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(player);
+                TransformAnimationComponent transformAnimation = Mappers.TRANSFORM_ANIMATION_MAPPER.get(player);
+                TextureAnimationComponent textureAnimation = Mappers.TEXTURE_ANIMATION_MAPPER.get(player);
+                float destX = 0;
+                int animationId = AnimationIDs.PLAYER_LEFT_RUNNING;
+                if (keycode == Input.Keys.RIGHT) {
+                    destX = WORLD_WIDTH;
+                    animationId = AnimationIDs.PLAYER_RIGHT_RUNNING;
+                }
+                keyPressed = keycode;
+                transformAnimation.animate(TransformAnimationType.POSITION, OtherConstants.PLAYER_SPEED, transform, destX, transform.y);
+                textureAnimation.animate(animationId, true);
+                return true;
             }
         });
     }

@@ -1,12 +1,13 @@
 package ru.compot.pomsrest;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.ScreenUtils;
 import ru.compot.pomsrest.screens.GameScreen;
 
-import static ru.compot.pomsrest.assets.AssetConstants.*;
+import static ru.compot.pomsrest.ashley.constants.Assets.*;
 
 public class GameCore extends Game {
 
@@ -32,6 +33,7 @@ public class GameCore extends Game {
 
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
         assetManager = new AssetManager();

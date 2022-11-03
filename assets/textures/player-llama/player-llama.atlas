@@ -4,9 +4,37 @@ size: 512, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-left-running
+entering
+  rotate: false
+  xy: 366, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+entering
   rotate: false
   xy: 210, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+entering
+  rotate: false
+  xy: 54, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+left-running
+  rotate: false
+  xy: 262, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+left-running
+  rotate: false
+  xy: 418, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
@@ -14,13 +42,6 @@ left-running
 left-running
   rotate: false
   xy: 158, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-left-running
-  rotate: false
-  xy: 2, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
@@ -34,14 +55,14 @@ right-running
   index: -1
 right-running
   rotate: false
-  xy: 262, 2
+  xy: 2, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 right-running
   rotate: false
-  xy: 54, 2
+  xy: 314, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

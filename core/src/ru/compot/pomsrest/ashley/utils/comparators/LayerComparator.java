@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.utils;
+package ru.compot.pomsrest.ashley.utils.comparators;
 
 import com.badlogic.ashley.core.Entity;
 import ru.compot.pomsrest.ashley.constants.Mappers;

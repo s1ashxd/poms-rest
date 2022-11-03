@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.components;
+package ru.compot.pomsrest.ashley.components.texture;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
