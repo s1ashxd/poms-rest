@@ -1,13 +1,13 @@
-package ru.compot.pomsrest.ashley.constants.enums;
+package ru.compot.pomsrest.ashley.utils.constants.enums;
 
 import com.badlogic.ashley.core.Entity;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
-import ru.compot.pomsrest.ashley.constants.AnimationIDs;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.OtherConstants;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.utils.constants.AnimationIDs;
+import ru.compot.pomsrest.utils.constants.OtherConstants;
 
 import java.util.function.BiConsumer;
 

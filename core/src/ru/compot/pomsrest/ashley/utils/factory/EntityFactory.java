@@ -10,8 +10,8 @@ import ru.compot.pomsrest.ashley.components.CollisionComponent;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
-import ru.compot.pomsrest.ashley.constants.AnimationIDs;
-import ru.compot.pomsrest.ashley.constants.Assets;
+import ru.compot.pomsrest.utils.constants.AnimationIDs;
+import ru.compot.pomsrest.utils.constants.Assets;
 
 public class EntityFactory {
 

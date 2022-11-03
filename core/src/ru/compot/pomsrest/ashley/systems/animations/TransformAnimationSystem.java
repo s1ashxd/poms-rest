@@ -6,9 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.Priorities;
-import ru.compot.pomsrest.ashley.constants.enums.TransformAnimationType;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Priorities;
+import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
 
 public class TransformAnimationSystem extends IteratingSystem {
 

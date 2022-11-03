@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.constants;
+package ru.compot.pomsrest.utils.constants;
 
 public class OtherConstants {
 

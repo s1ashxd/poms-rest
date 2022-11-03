@@ -6,8 +6,8 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.Priorities;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 import ru.compot.pomsrest.ashley.utils.comparators.LayerComparator;
 
 public class RenderSystem extends SortedIteratingSystem {

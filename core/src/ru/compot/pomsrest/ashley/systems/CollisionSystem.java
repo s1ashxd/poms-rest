@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 import ru.compot.pomsrest.ashley.components.CollisionComponent;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.Priorities;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 import ru.compot.pomsrest.ashley.utils.comparators.CollisionComparator;
 
 public class CollisionSystem extends SortedIteratingSystem {

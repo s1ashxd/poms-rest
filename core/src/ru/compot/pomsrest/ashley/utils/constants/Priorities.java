@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.constants;
+package ru.compot.pomsrest.ashley.utils.constants;
 
 public class Priorities {
 

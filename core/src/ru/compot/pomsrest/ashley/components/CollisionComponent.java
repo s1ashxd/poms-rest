@@ -2,7 +2,7 @@ package ru.compot.pomsrest.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
-import ru.compot.pomsrest.ashley.constants.enums.CollisionType;
+import ru.compot.pomsrest.ashley.utils.constants.enums.CollisionType;
 
 public class CollisionComponent implements Component, Pool.Poolable {
 

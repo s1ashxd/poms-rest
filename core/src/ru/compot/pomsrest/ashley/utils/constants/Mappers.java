@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.ashley.constants;
+package ru.compot.pomsrest.ashley.utils.constants;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import ru.compot.pomsrest.ashley.components.CollisionComponent;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.ScreenUtils;
 import ru.compot.pomsrest.screens.GameScreen;
 
-import static ru.compot.pomsrest.ashley.constants.Assets.*;
+import static ru.compot.pomsrest.utils.constants.Assets.*;
 
 public class GameCore extends Game {
 

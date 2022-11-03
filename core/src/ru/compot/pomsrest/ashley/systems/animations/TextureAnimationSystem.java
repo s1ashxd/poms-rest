@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
 import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.Priorities;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
 public class TextureAnimationSystem extends IteratingSystem {
     public TextureAnimationSystem() {

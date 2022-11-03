@@ -6,8 +6,8 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
-import ru.compot.pomsrest.ashley.constants.Mappers;
-import ru.compot.pomsrest.ashley.constants.Priorities;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
 public class DebugRenderSystem extends IteratingSystem {
     private final ShapeRenderer renderer = new ShapeRenderer();

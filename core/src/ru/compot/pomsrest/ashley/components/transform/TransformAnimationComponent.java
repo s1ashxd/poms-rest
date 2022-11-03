@@ -2,7 +2,7 @@ package ru.compot.pomsrest.ashley.components.transform;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
-import ru.compot.pomsrest.ashley.constants.enums.TransformAnimationType;
+import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
 import ru.compot.pomsrest.ashley.utils.VectorAnimation;
 
 public class TransformAnimationComponent implements Component, Pool.Poolable {

@@ -1,7 +1,7 @@
 package ru.compot.pomsrest.ashley.utils.comparators;
 
 import com.badlogic.ashley.core.Entity;
-import ru.compot.pomsrest.ashley.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 
 import java.util.Comparator;
 
