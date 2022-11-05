@@ -3,7 +3,6 @@ package ru.compot.pomsrest.ashley.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import ru.compot.pomsrest.ashley.components.InteractComponent;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
