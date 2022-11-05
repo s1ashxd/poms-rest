@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TextureAnimationComponent implements Component, Pool.Poolable {
 
-    public final Map<Integer, AnimationData> animations = new HashMap<>();
+    public final ConcurrentHashMap<Integer, AnimationData> animations = new ConcurrentHashMap<>();
     public Animation<TextureRegion> currentAnimation;
     public TextureRegion idleTexture;
     public float estimatedTime;

@@ -5,7 +5,9 @@ import com.badlogic.gdx.utils.Pool;
 
 public class TransformComponent implements Component, Pool.Poolable {
 
-    public float x, y, width, height;
+    public float x, y;
+    public float originX, originY;
+    public float width, height;
     public float scaleX = 1f, scaleY = 1f;
 
     @Override

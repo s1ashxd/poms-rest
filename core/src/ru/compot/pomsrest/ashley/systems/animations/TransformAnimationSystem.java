@@ -6,9 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
+import ru.compot.pomsrest.ashley.utils.TransformAnimationData;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.Priorities;
-import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
 
 public class TransformAnimationSystem extends IteratingSystem {
 
@@ -19,39 +19,28 @@ public class TransformAnimationSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformAnimationComponent transformAnimation = Mappers.TRANSFORM_ANIMATION_MAPPER.get(entity);
-        if (transformAnimation.animation == null || transformAnimation.type == null) {
-            transformAnimation.reset();
-            return;
-        }
         TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(entity);
-        TransformAnimationType type = transformAnimation.type;
-        Vector2 key;
-        boolean finished;
-        if (transformAnimation.animation.isAnimationFinished(transformAnimation.estimatedTime)) {
-            key = transformAnimation.animation.getEnd();
-            finished = true;
-        } else {
-            key = transformAnimation.animation.getKeyFrame(transformAnimation.estimatedTime);
-            transformAnimation.estimatedTime += deltaTime;
-            finished = false;
+        transformAnimation.animations.forEach(a -> {
+            Vector2 state = getAnimationState(a, deltaTime);
+            a.type.acceptAction(transform, state);
+            runFinishActions(transformAnimation, a);
+        });
+    }
+
+    private Vector2 getAnimationState(TransformAnimationData tad, float deltaTime) {
+        if (tad.animation.isAnimationFinished(tad.estimatedTime))
+            return tad.animation.getEnd();
+        else {
+            Vector2 result = tad.animation.getKeyFrame(tad.estimatedTime);
+            tad.estimatedTime += deltaTime;
+            return result;
         }
-        switch (type) {
-            case POSITION:
-                transform.x = key.x;
-                transform.y = key.y;
-                break;
-            case SIZE:
-                transform.width = key.x;
-                transform.height = key.y;
-                break;
-            case SCALE:
-                transform.scaleX = key.x;
-                transform.scaleY = key.y;
-                break;
-        }
-        if (finished) {
-            transformAnimation.onFinish.run();
-            transformAnimation.reset();
-        }
+    }
+
+    private void runFinishActions(TransformAnimationComponent component, TransformAnimationData data) {
+        if (!data.animation.isAnimationFinished(data.estimatedTime)) return;
+        Runnable onFinish = data.onFinish;
+        if (onFinish != null) onFinish.run();
+        component.animations.remove(data);
     }
 }

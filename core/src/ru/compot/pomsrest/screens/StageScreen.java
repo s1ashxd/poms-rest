@@ -4,14 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import ru.compot.pomsrest.GameCore;
+import ru.compot.pomsrest.scene2d.TransitionActor;
 
 public abstract class StageScreen extends ScreenAdapter {
 
     protected final SpriteBatch batch = new SpriteBatch();
-    protected final FillViewport viewport = new FillViewport(GameCore.getScreenWidth(), GameCore.getScreenHeight());
+    protected final ExtendViewport viewport = new ExtendViewport(GameCore.SCREEN_WIDTH, GameCore.SCREEN_HEIGHT);
     protected final Stage stage = new Stage(viewport, batch);
+    protected final TransitionActor transition = TransitionActor.addTransitionToScreen(this, 0f, 0f, 0f);
+
+    protected StageScreen() {
+        stage.addActor(transition);
+    }
 
     @Override
     public void show() {
@@ -33,5 +39,13 @@ public abstract class StageScreen extends ScreenAdapter {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public TransitionActor getTransition() {
+        return transition;
     }
 }

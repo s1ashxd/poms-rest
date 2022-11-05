@@ -1,55 +1,45 @@
 package ru.compot.pomsrest;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.utils.ScreenUtils;
-import ru.compot.pomsrest.screens.GameScreen;
+import ru.compot.pomsrest.ashley.config.PlayerConfig;
+import ru.compot.pomsrest.screens.StageScreen;
 
 import static ru.compot.pomsrest.utils.constants.Assets.*;
 
-public class GameCore extends Game {
+public class GameCore {
 
     public static final GameCore INSTANCE = new GameCore();
+    public static final float SCREEN_WIDTH = 400, SCREEN_HEIGHT = 700;
 
-    private AssetManager assetManager;
-    private float screenWidth, screenHeight;
+    public final PlayerConfig playerConfig = new PlayerConfig();
+    private final AssetManager assetManager = new AssetManager();
 
     private GameCore() {
     }
 
-    public static <T> T getAsset(String name) {
-        return INSTANCE.assetManager.get(name);
-    }
-
-    public static float getScreenWidth() {
-        return INSTANCE.screenWidth;
-    }
-
-    public static float getScreenHeight() {
-        return INSTANCE.screenHeight;
-    }
-
-    @Override
-    public void create() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
-        assetManager = new AssetManager();
-        assetManager.load(BACKGROUND, TEXTURE);
+    public void init() {
+        assetManager.load(WORLD_BACKGROUND, TEXTURE);
+        assetManager.load(RESTAURANT_BACKGROUND, TEXTURE);
         assetManager.load(PLAYER_LLAMA, TEXTURE_ATLAS);
         assetManager.finishLoading();
-        setScreen(new GameScreen());
     }
 
-    @Override
-    public void render() {
-        ScreenUtils.clear(0, 0, 0, 1);
-        super.render();
+    public <T> T getAsset(String name) {
+        return assetManager.get(name);
     }
 
-    @Override
+    public <T> T getAsset(String name, Class<T> clazz) {
+        return assetManager.get(name, clazz);
+    }
+
+    public StageScreen getCurrentScreen() {
+        return (StageScreen) Application.INSTANCE.getScreen();
+    }
+
+    public void setCurrentScreen(StageScreen currentScreen) {
+        Application.INSTANCE.setScreenWithTransition(currentScreen);
+    }
+
     public void dispose() {
         assetManager.dispose();
     }

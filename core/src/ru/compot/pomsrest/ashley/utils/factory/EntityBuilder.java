@@ -9,13 +9,12 @@ import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class EntityBuilder {
 
     private final Engine engine;
-    private final List<Component> components = new ArrayList<>();
+    private final ArrayList<Component> components = new ArrayList<>();
 
     public EntityBuilder(Engine engine) {
         this.engine = engine;
@@ -37,6 +36,8 @@ public class EntityBuilder {
         TransformComponent bc = createComponent(TransformComponent.class);
         bc.width = width;
         bc.height = height;
+        bc.originX = width / 2f;
+        bc.originY = height / 2f;
         return this;
     }
 

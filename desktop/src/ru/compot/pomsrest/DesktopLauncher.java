@@ -9,6 +9,7 @@ public class DesktopLauncher {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("Pom's Rest");
-        new Lwjgl3Application(GameCore.INSTANCE, config);
+        config.setWindowedMode(400, 700);
+        new Lwjgl3Application(Application.INSTANCE, config);
     }
 }
