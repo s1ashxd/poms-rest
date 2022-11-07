@@ -8,7 +8,7 @@ public class VectorAnimation {
     private final Vector2 start, distance, end;
     private final Interpolation interpolation;
     private final float speed;
-    private float time;
+    private final float time;
 
     public VectorAnimation(float speed, float startX, float startY, float destX, float destY, Interpolation interpolation) {
         this.start = new Vector2(startX, startY);
@@ -29,10 +29,8 @@ public class VectorAnimation {
         return estimatedTime >= time;
     }
 
-    public void setEnd(float x, float y, float lastEstimatedTime) {
-        start.set(getKeyFrame(lastEstimatedTime));
-        end.set(x, y);
-        distance.set(x - start.x, y - start.y);
-        time = (float) (Math.sqrt(distance.x * distance.x + distance.y * distance.y) / speed);
+    public VectorAnimation copy(float endX, float endY, float lastEstimatedTime) {
+        Vector2 state = getKeyFrame(lastEstimatedTime);
+        return new VectorAnimation(speed, state.x, state.y, endX, endY, interpolation);
     }
 }

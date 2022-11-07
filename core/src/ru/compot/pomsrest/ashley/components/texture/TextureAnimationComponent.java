@@ -30,7 +30,7 @@ public class TextureAnimationComponent implements Component, Pool.Poolable {
     @Override
     public void reset() {
         currentAnimation = null;
-        estimatedTime = 0;
+        estimatedTime = 0f;
         looping = false;
     }
 

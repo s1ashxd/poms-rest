@@ -12,8 +12,6 @@ import ru.compot.pomsrest.screens.world.WorldScreen;
 import ru.compot.pomsrest.utils.constants.AnimationIDs;
 import ru.compot.pomsrest.utils.constants.OtherConstants;
 
-import java.util.function.BiConsumer;
-
 public enum InteractType {
     WORLD_ENTER_AREA((player, collider) -> {
         PlayerComponent playerData = Mappers.PLAYER_MAPPER.get(player);
@@ -84,13 +82,18 @@ public enum InteractType {
         );
     });
 
-    private final BiConsumer<Entity, Entity> action;
+    private final InteractApplier action;
 
-    InteractType(BiConsumer<Entity, Entity> action) {
+    InteractType(InteractApplier action) {
         this.action = action;
     }
 
     public void acceptAction(Entity player, Entity collider) {
-        action.accept(player, collider);
+        action.apply(player, collider);
+    }
+
+    @FunctionalInterface
+    private interface InteractApplier {
+        void apply(Entity player, Entity collider);
     }
 }

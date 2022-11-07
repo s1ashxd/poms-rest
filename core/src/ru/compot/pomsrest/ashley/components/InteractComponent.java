@@ -7,7 +7,7 @@ import ru.compot.pomsrest.ashley.utils.constants.enums.InteractType;
 public class InteractComponent implements Component, Pool.Poolable {
 
     public InteractType interactType = InteractType.WORLD_ENTER_AREA;
-    public int collisionPriority;
+    public int interactPriority;
 
     @Override
     public void reset() {

@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TransformAnimationComponent implements Component, Pool.Poolable {
 
-    public CopyOnWriteArrayList<TransformAnimationData> animations = new CopyOnWriteArrayList<>();
+    public final CopyOnWriteArrayList<TransformAnimationData> animations = new CopyOnWriteArrayList<>();
 
     @Override
     public void reset() {
@@ -22,7 +22,10 @@ public class TransformAnimationComponent implements Component, Pool.Poolable {
         animations.add(new TransformAnimationData(new VectorAnimation(speed, startX, startY, destX, destY, null), type, onFinish));
     }
 
+    @SuppressWarnings("all")
     public void stopAnimations(TransformAnimationType type) {
-        animations.removeIf(a -> a.type == type);
+        for (TransformAnimationData tad : animations) {
+            if (tad.type == type) animations.remove(tad);
+        }
     }
 }

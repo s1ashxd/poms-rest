@@ -23,8 +23,8 @@ public class RenderSystem extends SortedIteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(entity);
         TextureComponent texture = Mappers.TEXTURE_MAPPER.get(entity);
-        float width = texture.width > 0 ? texture.width : texture.region.getRegionWidth();
-        float height = texture.height > 0 ? texture.height : texture.region.getRegionHeight();
+        float width = texture.width > 0f ? texture.width : texture.region.getRegionWidth();
+        float height = texture.height > 0f ? texture.height : texture.region.getRegionHeight();
         batch.begin();
         batch.draw(
                 texture.region,
@@ -32,7 +32,7 @@ public class RenderSystem extends SortedIteratingSystem {
                 transform.originX, transform.originY,
                 width, height,
                 transform.scaleX, transform.scaleY,
-                0);
+                0f);
         batch.end();
     }
 }

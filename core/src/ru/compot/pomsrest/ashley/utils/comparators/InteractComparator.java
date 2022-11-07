@@ -14,9 +14,6 @@ public class InteractComparator implements Comparator<Entity> {
 
     @Override
     public int compare(Entity o1, Entity o2) {
-        return Integer.compare(
-                Mappers.INTERACT_MAPPER.get(o1).collisionPriority,
-                Mappers.INTERACT_MAPPER.get(o2).collisionPriority
-        );
+        return Integer.compare(Mappers.INTERACT_MAPPER.get(o1).interactPriority, Mappers.INTERACT_MAPPER.get(o2).interactPriority);
     }
 }

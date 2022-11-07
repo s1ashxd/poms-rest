@@ -49,7 +49,7 @@ public abstract class StageScreen extends ScreenAdapter {
     }
 
     public TransitionActor getTransition() {
-        transition.setPosition(camera.position.x - GameCore.CAMERA_WIDTH, camera.position.y - GameCore.SCREEN_HEIGHT / 2f);
+        transition.setPosition(camera.position.x - GameCore.CAMERA_WIDTH, 0);
         return transition;
     }
 }

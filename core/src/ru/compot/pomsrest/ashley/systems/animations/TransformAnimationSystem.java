@@ -20,11 +20,11 @@ public class TransformAnimationSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformAnimationComponent transformAnimation = Mappers.TRANSFORM_ANIMATION_MAPPER.get(entity);
         TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(entity);
-        transformAnimation.animations.forEach(a -> {
-            Vector2 state = getAnimationState(a, deltaTime);
-            a.type.acceptAction(transform, state);
-            runFinishActions(transformAnimation, a);
-        });
+        for (TransformAnimationData tad : transformAnimation.animations) {
+            Vector2 state = getAnimationState(tad, deltaTime);
+            tad.type.acceptAction(transform, state);
+            runFinishActions(transformAnimation, tad);
+        }
     }
 
     private Vector2 getAnimationState(TransformAnimationData tad, float deltaTime) {

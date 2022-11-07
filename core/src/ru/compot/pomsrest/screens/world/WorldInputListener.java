@@ -47,11 +47,11 @@ public class WorldInputListener extends InputListener {
                 transform.y,
                 textureAnimation::reset
         );
-        float onCameraX = destX - (camera.position.x - GameCore.CAMERA_WIDTH);
-        if (onCameraX <= WorldScreen.CAMERA_MOVE_OFFSET || onCameraX >= GameCore.CAMERA_WIDTH - WorldScreen.CAMERA_MOVE_OFFSET) {
-            float cameraX = destX + transform.originX;
-            if (cameraX < WorldScreen.MIN_CAMERA_X) cameraX = WorldScreen.MIN_CAMERA_X;
-            else if (cameraX > WorldScreen.MAX_CAMERA_X) cameraX = WorldScreen.MAX_CAMERA_X;
+        float onCameraX = x - (camera.position.x - GameCore.CAMERA_WIDTH);
+        if (onCameraX <= WorldScreen.CAMERA_MOVE_OFFSET || onCameraX >= GameCore.SCREEN_WIDTH - WorldScreen.CAMERA_MOVE_OFFSET) {
+            float cameraX = x;
+            if (x < WorldScreen.MIN_CAMERA_X) cameraX = WorldScreen.MIN_CAMERA_X;
+            else if (x > WorldScreen.MAX_CAMERA_X) cameraX = WorldScreen.MAX_CAMERA_X;
             camera.animate(cameraX, camera.position.y);
         }
         return true;

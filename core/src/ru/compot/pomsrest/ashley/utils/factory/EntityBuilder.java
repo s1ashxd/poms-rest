@@ -9,7 +9,6 @@ import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class EntityBuilder {
 
@@ -67,15 +66,17 @@ public class EntityBuilder {
         return this;
     }
 
-    public <T extends Component> EntityBuilder addComponent(Class<T> clazz, Consumer<T> applier) {
+    public <T extends Component> EntityBuilder addComponent(Class<T> clazz, ComponentConfig<T> applier) {
         T component = createComponent(clazz);
-        applier.accept(component);
+        applier.apply(component);
         return this;
     }
 
     public Entity build() {
         Entity entity = engine.createEntity();
-        components.forEach(entity::add);
+        for (Component c : components) {
+            entity.add(c);
+        }
         engine.addEntity(entity);
         return entity;
     }
@@ -88,5 +89,10 @@ public class EntityBuilder {
         T result = engine.createComponent(clazz);
         components.add(result);
         return result;
+    }
+
+    @FunctionalInterface
+    public interface ComponentConfig<T extends Component> {
+        void apply(T component);
     }
 }
