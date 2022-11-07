@@ -34,7 +34,7 @@ public class TransitionActor extends Actor {
         rend.setProjectionMatrix(batch.getProjectionMatrix());
         rend.begin(ShapeRenderer.ShapeType.Filled);
         rend.setColor(getColor());
-        rend.rect(0f, 0f, GameCore.SCREEN_WIDTH, GameCore.SCREEN_HEIGHT);
+        rend.rect(getX(), getY(), GameCore.SCREEN_WIDTH, GameCore.SCREEN_HEIGHT);
         rend.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
     }

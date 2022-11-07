@@ -10,6 +10,7 @@ public class GameCore {
 
     public static final GameCore INSTANCE = new GameCore();
     public static final float SCREEN_WIDTH = 400, SCREEN_HEIGHT = 700;
+    public static final float CAMERA_WIDTH = SCREEN_WIDTH / 2f;
 
     public final PlayerConfig playerConfig = new PlayerConfig();
     private final AssetManager assetManager = new AssetManager();
@@ -26,14 +27,6 @@ public class GameCore {
 
     public <T> T getAsset(String name) {
         return assetManager.get(name);
-    }
-
-    public <T> T getAsset(String name, Class<T> clazz) {
-        return assetManager.get(name, clazz);
-    }
-
-    public StageScreen getCurrentScreen() {
-        return (StageScreen) Application.INSTANCE.getScreen();
     }
 
     public void setCurrentScreen(StageScreen currentScreen) {

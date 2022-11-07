@@ -61,6 +61,7 @@ public enum InteractType {
                     );
                 }
         );
+        playerData.camera.animate(destX + playerTransform.originX, playerData.camera.position.y);
     }),
     RESTAURANT_EXIT_AREA((player, collider) -> {
         PlayerComponent playerData = Mappers.PLAYER_MAPPER.get(player);

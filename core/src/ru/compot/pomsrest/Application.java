@@ -10,13 +10,17 @@ public class Application extends Game {
     public static final Application INSTANCE = new Application();
 
     private Application() {
-
     }
 
     @Override
     public void create() {
         GameCore.INSTANCE.init();
-        setScreen(new WorldScreen(10f));
+        setScreen(new WorldScreen(WorldScreen.CAMERA_MOVE_OFFSET));
+    }
+
+    @Override
+    public void dispose() {
+        GameCore.INSTANCE.dispose();
     }
 
     public void setScreenWithTransition(Screen screen) {

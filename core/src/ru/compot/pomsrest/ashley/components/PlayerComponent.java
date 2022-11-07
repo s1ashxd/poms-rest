@@ -3,10 +3,12 @@ package ru.compot.pomsrest.ashley.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import ru.compot.pomsrest.utils.AnimatedCamera;
 
 public class PlayerComponent implements Component, Pool.Poolable {
 
     public final Vector2 interactPoint = new Vector2();
+    public AnimatedCamera camera;
     public boolean interactRequested;
     public boolean moveBlocked;
 

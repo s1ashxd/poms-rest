@@ -12,6 +12,7 @@ import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponen
 import ru.compot.pomsrest.ashley.utils.constants.enums.InteractType;
 import ru.compot.pomsrest.screens.restaurant.RestaurantScreen;
 import ru.compot.pomsrest.screens.world.WorldScreen;
+import ru.compot.pomsrest.utils.AnimatedCamera;
 import ru.compot.pomsrest.utils.constants.AnimationIDs;
 import ru.compot.pomsrest.utils.constants.Assets;
 
@@ -36,7 +37,7 @@ public class EntityFactory {
                 .build();
     }
 
-    public static Entity createPlayerEntity(Engine engine, float x, float y) {
+    public static Entity createPlayerEntity(Engine engine, float x, float y, AnimatedCamera camera) {
         TextureAtlas atlas = GameCore.INSTANCE.getAsset(Assets.PLAYER_LLAMA);
         return EntityBuilder.create(engine)
                 .setPosition(x, y)
@@ -62,7 +63,7 @@ public class EntityFactory {
                     );
                 })
                 .addComponent(TransformAnimationComponent.class)
-                .addComponent(PlayerComponent.class)
+                .addComponent(PlayerComponent.class, pc -> pc.camera = camera)
                 .build();
     }
 

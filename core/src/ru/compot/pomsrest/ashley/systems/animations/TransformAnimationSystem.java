@@ -28,13 +28,9 @@ public class TransformAnimationSystem extends IteratingSystem {
     }
 
     private Vector2 getAnimationState(TransformAnimationData tad, float deltaTime) {
-        if (tad.animation.isAnimationFinished(tad.estimatedTime))
-            return tad.animation.getEnd();
-        else {
-            Vector2 result = tad.animation.getKeyFrame(tad.estimatedTime);
-            tad.estimatedTime += deltaTime;
-            return result;
-        }
+        Vector2 result = tad.animation.getKeyFrame(tad.estimatedTime);
+        tad.estimatedTime += deltaTime;
+        return result;
     }
 
     private void runFinishActions(TransformAnimationComponent component, TransformAnimationData data) {

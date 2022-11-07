@@ -1,6 +1,7 @@
 package ru.compot.pomsrest.ashley.utils;
 
 import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
+import ru.compot.pomsrest.utils.VectorAnimation;
 
 public class TransformAnimationData {
 
