@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.pathfinder;
+package ru.compot.pomsrest.ai;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 

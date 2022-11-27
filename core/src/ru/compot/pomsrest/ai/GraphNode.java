@@ -1,4 +1,4 @@
-package ru.compot.pomsrest.pathfinder;
+package ru.compot.pomsrest.ai;
 
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.utils.Array;
@@ -25,12 +25,22 @@ public class GraphNode {
         return connections;
     }
 
-    public void connect(GraphNode vertex) {
-        connections.add(new ConnectionImpl(this, vertex));
+    public void connect(GraphNode node) {
+        connections.add(new ConnectionImpl(this, node));
+    }
+
+    public void removeConnection(GraphNode node) {
+        for (int i = 0; i < connections.size; i++) {
+            Connection<GraphNode> connection = connections.get(i);
+            if (connection.getToNode() == node) connections.removeValue(connection, true);
+        }
     }
 
     @Override
     public String toString() {
-        return "x= " + x + "; y=" + y + "\n";
+        return "GraphNode{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

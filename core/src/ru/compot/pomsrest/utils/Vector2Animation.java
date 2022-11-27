@@ -3,14 +3,14 @@ package ru.compot.pomsrest.utils;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 
-public class VectorAnimation {
+public class Vector2Animation {
 
     private final Vector2 start, distance, end;
     private final Interpolation interpolation;
     private final float speed;
     private final float time;
 
-    public VectorAnimation(float speed, float startX, float startY, float destX, float destY, Interpolation interpolation) {
+    public Vector2Animation(float speed, float startX, float startY, float destX, float destY, Interpolation interpolation) {
         this.start = new Vector2(startX, startY);
         this.distance = new Vector2(destX - startX, destY - startY);
         this.end = new Vector2(destX, destY);
@@ -29,8 +29,8 @@ public class VectorAnimation {
         return estimatedTime >= time;
     }
 
-    public VectorAnimation copy(float endX, float endY, float lastEstimatedTime) {
+    public Vector2Animation copy(float endX, float endY, float lastEstimatedTime) {
         Vector2 state = getKeyFrame(lastEstimatedTime);
-        return new VectorAnimation(speed, state.x, state.y, endX, endY, interpolation);
+        return new Vector2Animation(speed, state.x, state.y, endX, endY, interpolation);
     }
 }

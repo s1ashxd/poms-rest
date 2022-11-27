@@ -3,7 +3,7 @@ package ru.compot.pomsrest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
-import ru.compot.pomsrest.screens.StageScreen;
+import ru.compot.pomsrest.screens.GameScreen;
 import ru.compot.pomsrest.screens.world.WorldScreen;
 
 public class Application extends Game {
@@ -21,7 +21,7 @@ public class Application extends Game {
 
     @Override
     public void render() {
-        ScreenUtils.clear(0f, 0f, 0f, 1f, true);
+        ScreenUtils.clear(1f, 1f, 1f, 1f, true);
         super.render();
     }
 
@@ -32,8 +32,8 @@ public class Application extends Game {
 
     public void setScreenWithTransition(Screen screen) {
         if (this.screen == null) return;
-        if (this.screen instanceof StageScreen)
-            ((StageScreen) this.screen).getTransition().startTransition(screen);
+        if (this.screen instanceof GameScreen)
+            ((GameScreen) this.screen).getTransition().startTransition(screen);
         else setScreen(screen);
     }
 }

@@ -23,6 +23,7 @@ public class RenderSystem extends SortedIteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(entity);
         TextureComponent texture = Mappers.TEXTURE_MAPPER.get(entity);
+        if (!texture.visible) return;
         float width = texture.width > 0f ? texture.width : texture.region.getRegionWidth();
         float height = texture.height > 0f ? texture.height : texture.region.getRegionHeight();
         batch.begin();

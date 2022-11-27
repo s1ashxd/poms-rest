@@ -1,68 +1,89 @@
 
 player-llama.png
-size: 512, 64
+size: 1024, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-entering
-  rotate: false
-  xy: 366, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-entering
-  rotate: false
-  xy: 210, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-entering
-  rotate: false
-  xy: 54, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-left-running
-  rotate: false
-  xy: 262, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-left-running
-  rotate: false
-  xy: 418, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-left-running
-  rotate: false
-  xy: 158, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-right-running
-  rotate: false
-  xy: 106, 2
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-right-running
+back-running/1
   rotate: false
   xy: 2, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
-right-running
+back-running/2
+  rotate: false
+  xy: 418, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+back-running/3
+  rotate: false
+  xy: 210, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+forward-running/1
+  rotate: false
+  xy: 522, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+forward-running/2
   rotate: false
   xy: 314, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+forward-running/3
+  rotate: false
+  xy: 54, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+left-running/1
+  rotate: false
+  xy: 106, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+left-running/2
+  rotate: false
+  xy: 470, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+left-running/3
+  rotate: false
+  xy: 262, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+right-running/1
+  rotate: false
+  xy: 574, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+right-running/2
+  rotate: false
+  xy: 366, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+right-running/3
+  rotate: false
+  xy: 158, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

@@ -1,8 +1,10 @@
 package ru.compot.pomsrest.screens.world;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.compot.pomsrest.GameCore;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
@@ -10,18 +12,16 @@ import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponen
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
-import ru.compot.pomsrest.utils.AnimatedCamera;
+import ru.compot.pomsrest.utils.Animated2DCamera;
 import ru.compot.pomsrest.utils.constants.AnimationIDs;
 import ru.compot.pomsrest.utils.constants.OtherConstants;
 
 public class WorldInputListener extends InputListener {
 
     private final Entity player;
-    private final AnimatedCamera camera;
 
-    public WorldInputListener(Entity player, AnimatedCamera camera) {
+    public WorldInputListener(Entity player) {
         this.player = player;
-        this.camera = camera;
     }
 
     @Override
@@ -31,6 +31,7 @@ public class WorldInputListener extends InputListener {
         TransformComponent transform = Mappers.TRANSFORM_MAPPER.get(player);
         TransformAnimationComponent transformAnimation = Mappers.TRANSFORM_ANIMATION_MAPPER.get(player);
         TextureAnimationComponent textureAnimation = Mappers.TEXTURE_ANIMATION_MAPPER.get(player);
+        Animated2DCamera camera = playerData.camera;
         playerData.interact(x, y);
         byte animationId = x < transform.x + transform.originX ? AnimationIDs.PLAYER_LEFT_RUNNING : AnimationIDs.PLAYER_RIGHT_RUNNING;
         float destX = x - transform.originX;
@@ -50,8 +51,10 @@ public class WorldInputListener extends InputListener {
         float onCameraX = x - (camera.position.x - GameCore.CAMERA_WIDTH);
         if (onCameraX <= WorldScreen.CAMERA_MOVE_OFFSET || onCameraX >= GameCore.SCREEN_WIDTH - WorldScreen.CAMERA_MOVE_OFFSET) {
             float cameraX = x;
-            if (x < WorldScreen.MIN_CAMERA_X) cameraX = WorldScreen.MIN_CAMERA_X;
-            else if (x > WorldScreen.MAX_CAMERA_X) cameraX = WorldScreen.MAX_CAMERA_X;
+            float minCameraX = camera.viewportWidth / 2f;
+            float maxCameraX = WorldScreen.WORLD_WIDTH - camera.viewportWidth / 2f;
+            if (x < minCameraX) cameraX = minCameraX;
+            else if (x > maxCameraX) cameraX = maxCameraX;
             camera.animate(cameraX, camera.position.y);
         }
         return true;

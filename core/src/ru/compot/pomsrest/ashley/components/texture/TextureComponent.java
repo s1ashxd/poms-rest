@@ -9,8 +9,10 @@ public class TextureComponent implements Component, Pool.Poolable {
     public TextureRegion region;
     public int zIndex;
     public float width, height;
+    public boolean visible = true;
 
     @Override
     public void reset() {
+        visible = false;
     }
 }

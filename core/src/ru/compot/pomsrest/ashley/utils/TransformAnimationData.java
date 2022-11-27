@@ -1,16 +1,16 @@
 package ru.compot.pomsrest.ashley.utils;
 
 import ru.compot.pomsrest.ashley.utils.constants.enums.TransformAnimationType;
-import ru.compot.pomsrest.utils.VectorAnimation;
+import ru.compot.pomsrest.utils.Vector2Animation;
 
 public class TransformAnimationData {
 
-    public final VectorAnimation animation;
+    public final Vector2Animation animation;
     public final TransformAnimationType type;
     public final Runnable onFinish;
     public float estimatedTime;
 
-    public TransformAnimationData(VectorAnimation animation, TransformAnimationType type, Runnable onFinish) {
+    public TransformAnimationData(Vector2Animation animation, TransformAnimationType type, Runnable onFinish) {
         this.animation = animation;
         this.type = type;
         this.onFinish = onFinish;
