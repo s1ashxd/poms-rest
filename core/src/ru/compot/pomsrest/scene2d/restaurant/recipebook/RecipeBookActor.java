@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -30,6 +31,7 @@ public class RecipeBookActor extends Actor {
     private final TextureRegion background;
     private final float prefX;
     private boolean opened;
+    private int currentPage;
 
     public RecipeBookActor(RestaurantScreen screen, TextureRegion background, float prefX, float y) {
         this.screen = screen;
@@ -69,10 +71,19 @@ public class RecipeBookActor extends Actor {
     public void switchRecipe(RecipeData data) {
         children.clear();
         Skin skin = Assets.getAsset(Assets.UI_SKIN);
+        Image exit = new Image(new TextureRegion((Texture) Assets.getAsset(Assets.RECIPE_BOOK_EXIT)));
+        exit.setPosition(0f, background.getRegionHeight());
+        exit.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                close();
+            }
+        });
+        children.addActor(exit);
         Label label = new Label(data.getTitle(), skin);
         label.setPosition(getWidth() / 2f - label.getWidth() / 2f + 10f, getHeight() - label.getHeight() - 40f);
         children.addActor(label);
-        Image image = new Image(atlas.findRegion(data.getAtlasRegion()));
+        Image image = new Image(atlas.findRegion(data.getDefaultRegion()));
         image.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -90,6 +101,30 @@ public class RecipeBookActor extends Actor {
             cy += lab.getHeight() + 10f;
             children.addActor(lab);
         }
+        ImageTextButton backLabel = new ImageTextButton("Назад", skin);
+        backLabel.setPosition(30, 10);
+        backLabel.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentPage--;
+                if (currentPage < 0) currentPage = RecipesRegistry.RECIPES.length - 1;
+                RecipeData rd = RecipesRegistry.RECIPES[currentPage];
+                switchRecipe(rd);
+            }
+        });
+        children.addActor(backLabel);
+        ImageTextButton forwardLabel = new ImageTextButton("Вперед", skin);
+        forwardLabel.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentPage++;
+                if (currentPage >= RecipesRegistry.RECIPES.length) currentPage = 0;
+                RecipeData rd = RecipesRegistry.RECIPES[currentPage];
+                switchRecipe(rd);
+            }
+        });
+        forwardLabel.setPosition(getWidth() - 70, 10);
+        children.addActor(forwardLabel);
     }
 
     public Group getChildren() {
@@ -110,7 +145,7 @@ public class RecipeBookActor extends Actor {
     public void close() {
         addAction(Actions.sequence(Actions.parallel(Actions.moveTo(Gdx.graphics.getWidth(), getY(), 1f, Interpolation.sine), Actions.alpha(0f, 1f)), Actions.run(() -> {
             opened = false;
-            screen.restoreCache();
+            screen.closeUI();
         })));
         setTouchable(Touchable.disabled);
     }

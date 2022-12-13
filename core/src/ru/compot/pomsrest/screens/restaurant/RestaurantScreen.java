@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import ru.compot.pomsrest.ai.GraphImpl;
+import ru.compot.pomsrest.ashley.systems.FoodSystem;
 import ru.compot.pomsrest.ashley.systems.InteractSystem;
+import ru.compot.pomsrest.ashley.systems.NPCSystem;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.enums.InteractType;
 import ru.compot.pomsrest.ashley.utils.factory.EntityFactory;
@@ -32,9 +32,11 @@ public class RestaurantScreen extends GameScreen {
 
     private final GraphImpl graph;
     private final RecipeBookActor recipeBookActor;
+    private final RestaurantInputListener listener;
     private final float restaurantWidth;
+    private final boolean[] tableCellsAccess;
+    private final Image table;
     private MinigameActor minigameActor;
-    private Array<Actor> cachedUi;
 
     public RestaurantScreen() {
         super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Animated2DCamera()));
@@ -110,7 +112,7 @@ public class RestaurantScreen extends GameScreen {
         Image rightBar = new Image(rightBarRegion);
         float maxRightX = restaurantWidth - rightBarRegion.getRegionWidth();
         rightBar.setPosition(maxRightX, floorHeight);
-        Image table = new Image(tableRegion);
+        this.table = new Image(tableRegion);
         table.setPosition(maxRightX, floorHeight + 2f * tableRegion.getRegionHeight());
         Image flowerpots = new Image(atlas.findRegion(Assets.RESTAURANT_POTS));
         flowerpots.setX(40f);
@@ -126,7 +128,7 @@ public class RestaurantScreen extends GameScreen {
         backgroundStage.addActor(table);
         backgroundStage.addActor(stairs);
         backgroundStage.addActor(kitchen);
-        foregroundStage.addActor(flowerpots);
+        backgroundStage.addActor(flowerpots);
         // pathfinder graph and flowers
         float chairGapX = (kitchen.getWidth() - chairRegion.getRegionWidth() * 2f) / 3f;
         float chairGapY = (floorHeight - chairRegion.getRegionHeight() * 3f) / 4f;
@@ -162,9 +164,26 @@ public class RestaurantScreen extends GameScreen {
         this.recipeBookActor = new RecipeBookActor(this, recipeBookRegion, Gdx.graphics.getWidth() / 2f - recipeBookRegion.getRegionWidth() / 2f / 2f, (Gdx.graphics.getHeight() - recipeBookRegion.getRegionHeight()) / 2f);
         Entity player = EntityFactory.buildPlayerEntity(engine, 10f, 40f, this, (Animated2DCamera) viewport.getCamera());
         EntityFactory.createInteractArea(engine, kitchen.getX() + kitchen.getStoveX(), kitchen.getY(), stoveRegion.getRegionWidth(), stoveRegion.getRegionHeight(), InteractType.RECIPE_BOOK_AREA);
-        engine.addSystem(new InteractSystem(player));
+        EntityFactory.createNPCEntity(engine, obstacles[0].x, obstacles[0].y, Assets.AGENT_SIT_REGION, Assets.AGENT_RUNNING_FOLDER, 1000, 0, 0, false);
+        EntityFactory.createNPCEntity(engine, obstacles[1].x, obstacles[1].y, Assets.BLUE_SIT_REGION, Assets.BLUE_RUNNING_FOLDER, 10000, 0, 0, false);
+        EntityFactory.createNPCEntity(engine, obstacles[2].x, obstacles[2].y, Assets.COSMIC_BLUE_SIT_REGION, Assets.COSMIC_BLUE_RUNNING_FOLDER, 20000, 0, 0, true);
+        EntityFactory.createNPCEntity(engine, obstacles[3].x, obstacles[3].y, Assets.GREEN_SIT_REGION, Assets.GREEN_RUNNING_FOLDER, 30000, 0, 0, true);
+        EntityFactory.createNPCEntity(engine, obstacles[4].x, obstacles[4].y, Assets.LIGHT_PURPLE_SIT_REGION, Assets.LIGHT_PURPLE_RUNNING_FOLDER, 40000, -14, -14, true);
+        EntityFactory.createNPCEntity(engine, obstacles[5].x, obstacles[5].y, Assets.MAUVE_SIT_REGION, Assets.MAUVE_RUNNING_FOLDER, 50000, -14, -14, true);
+        EntityFactory.createNPCEntity(engine, obstacles[0].x, obstacles[0].y, Assets.RED_SIT_REGION, Assets.RED_RUNNING_FOLDER, 60000, -7, 0, true);
+        EntityFactory.createNPCEntity(engine, obstacles[1].x, obstacles[1].y, Assets.PURPLE_SIT_REGION, Assets.PURPLE_RUNNING_FOLDER, 70000, -16, -14, true);
+        EntityFactory.createNPCEntity(engine, obstacles[2].x, obstacles[2].y, Assets.PINK_SIT_REGION, Assets.PINK_RUNNING_FOLDER, 80000, 0, 0, false);
+        EntityFactory.createNPCEntity(engine, obstacles[3].x, obstacles[3].y, Assets.TIGER_SIT_REGION, Assets.TIGER_RUNNING_FOLDER, 90000, 3, -14, false);
+        EntityFactory.createNPCEntity(engine, obstacles[4].x, obstacles[4].y, Assets.WHITE_SIT_REGION, Assets.WHITE_RUNNING_FOLDER, 100000, 0, -14, false);
+        EntityFactory.createNPCEntity(engine, obstacles[5].x, obstacles[5].y, Assets.YELLOW_SIT_REGION, Assets.YELLOW_RUNNING_FOLDER, 110000, 0, 0, false);
         this.graph = new GraphImpl(1f, Mappers.TRANSFORM_MAPPER.get(player).width, obstacles);
-        foregroundStage.addListener(new RestaurantInputListener(player, graph, new Entity[0]));
+        engine.addSystem(new InteractSystem(player));
+        NPCSystem npcSystem = new NPCSystem(graph, this.tableCellsAccess = new boolean[4]);
+        FoodSystem foodSystem = new FoodSystem(player, npcSystem);
+        engine.addSystem(npcSystem);
+        engine.addSystem(foodSystem);
+        this.listener = new RestaurantInputListener(player, graph, engine);
+        foregroundStage.addListener(listener);
     }
 
     public GraphImpl getGraph() {
@@ -179,32 +198,20 @@ public class RestaurantScreen extends GameScreen {
         return restaurantWidth;
     }
 
-    public void cacheForeground() {
-        if (recipeBookActor.isOpened()) return;
-        cachedUi = foregroundStage.getActors();
-        foregroundStage.clear();
-    }
-
-    public void restoreCache() {
-        if (cachedUi == null) return;
-        foregroundStage.clear();
-        for (int i = 0; i < cachedUi.size; i++) {
-            foregroundStage.addActor(cachedUi.get(i));
-        }
-    }
-
     public void openRecipeBook() {
         foregroundStage.addActor(recipeBookActor);
         foregroundStage.addActor(recipeBookActor.getChildren());
     }
 
-    public MinigameActor getMinigameActor() {
-        return minigameActor;
-    }
-
     public void openMinigame(RecipeData data) {
-        this.minigameActor = new MinigameActor(data);
+        this.minigameActor = new MinigameActor(data, this, tableCellsAccess, engine, table.getX(), table.getY());
         foregroundStage.addActor(minigameActor);
         foregroundStage.addActor(minigameActor.getChildren());
+    }
+
+    public void closeUI() {
+        foregroundStage.clear();
+        minigameActor = null;
+        foregroundStage.addListener(listener);
     }
 }

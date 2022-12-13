@@ -2,7 +2,6 @@ package ru.compot.pomsrest.ashley.utils.constants.enums;
 
 import com.badlogic.ashley.core.Entity;
 import ru.compot.pomsrest.GameCore;
-import ru.compot.pomsrest.ai.GraphImpl;
 import ru.compot.pomsrest.ai.GraphNode;
 import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.texture.TextureAnimationComponent;
@@ -39,7 +38,7 @@ public enum InteractType {
                 () -> {
                     playerData.moveBlocked = true;
                     playerTextureAnimation.reset();
-                    playerTextureAnimation.animate(AnimationIDs.PLAYER_ENTERING, true);
+                    playerTextureAnimation.animate(AnimationIDs.PLAYER_FORWARD_RUNNING, true);
                     playerTransformAnimation.animate(
                             TransformAnimationType.SCALE,
                             0.4f,
@@ -105,12 +104,23 @@ public enum InteractType {
                 areaTransform.y - playerTransform.originY,
                 screen.getGraph()
         );
-        PathfinderUtils.animatePath(iterator, playerTransform, playerTransformAnimation, () -> {
-            screen.cacheForeground();
-            screen.openRecipeBook();
-            screen.getRecipeBookActor().open();
-            playerData.moveBlocked = true;
-        });
+        PathfinderUtils.animatePath(
+                iterator,
+                playerTransform,
+                playerTransformAnimation,
+                node -> {
+                    float xDiff = playerTransform.x - node.getX();
+                    float yDiff = playerTransform.y - node.getY();
+                    double angle = Math.toDegrees(Math.atan(yDiff / xDiff));
+                    if (angle > -45 && angle < 45) {
+                        playerTextureAnimation.animate(playerTransform.y > node.getY() ? AnimationIDs.PLAYER_FORWARD_RUNNING : AnimationIDs.PLAYER_BACK_RUNNING, true);
+                    } else playerTextureAnimation.animate(playerTransform.x > node.getX() ? AnimationIDs.PLAYER_RIGHT_RUNNING : AnimationIDs.PLAYER_LEFT_RUNNING, true);
+                },
+                () -> {
+                    playerTextureAnimation.reset();
+                    screen.openRecipeBook();
+                    screen.getRecipeBookActor().open();
+                });
     });
 
     private final InteractApplier action;

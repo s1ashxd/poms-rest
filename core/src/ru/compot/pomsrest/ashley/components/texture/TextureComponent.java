@@ -13,6 +13,6 @@ public class TextureComponent implements Component, Pool.Poolable {
 
     @Override
     public void reset() {
-        visible = false;
+        visible = true;
     }
 }

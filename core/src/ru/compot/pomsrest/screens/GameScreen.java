@@ -6,10 +6,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import ru.compot.pomsrest.GameCore;
 import ru.compot.pomsrest.ashley.systems.animations.TextureAnimationSystem;
 import ru.compot.pomsrest.ashley.systems.animations.TransformAnimationSystem;
-import ru.compot.pomsrest.ashley.systems.render.DebugRenderSystem;
 import ru.compot.pomsrest.ashley.systems.render.RenderSystem;
 import ru.compot.pomsrest.scene2d.TransitionActor;
 
@@ -26,7 +24,6 @@ public abstract class GameScreen extends ScreenAdapter {
         this.transition = new TransitionActor(viewport.getCamera(), 0f, 0f, 0f);
         this.backgroundStage = new Stage(viewport, batch);
         this.foregroundStage = new Stage(viewport, batch);
-        engine.addSystem(new DebugRenderSystem(batch));
         engine.addSystem(new RenderSystem(batch));
         engine.addSystem(new TextureAnimationSystem());
         engine.addSystem(new TransformAnimationSystem());

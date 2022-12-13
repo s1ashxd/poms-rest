@@ -35,12 +35,13 @@ public class PathfinderUtils {
         return null;
     }
 
-    public static void animatePath(Iterator<GraphNode> nodes, TransformComponent transform, TransformAnimationComponent transformAnimation, Runnable onFinish) {
+    public static void animatePath(Iterator<GraphNode> nodes, TransformComponent transform, TransformAnimationComponent transformAnimation, PathFinishConsumer onPathFinish, Runnable onFinish) {
         if (nodes == null || !nodes.hasNext()) {
             onFinish.run();
             return;
         }
         GraphNode node = nodes.next();
+        if (onPathFinish != null) onPathFinish.accept(node);
         transformAnimation.animate(
                 TransformAnimationType.POSITION,
                 OtherConstants.PLAYER_SPEED,
@@ -50,12 +51,17 @@ public class PathfinderUtils {
                 node.getY(),
                 () -> {
                     if (nodes.hasNext()) {
-                        animatePath(nodes, transform, transformAnimation, onFinish);
+                        animatePath(nodes, transform, transformAnimation, onPathFinish, onFinish);
                         return;
                     }
                     if (onFinish != null) onFinish.run();
                     transformAnimation.stopAnimations(TransformAnimationType.POSITION);
                 }
         );
+    }
+
+    @FunctionalInterface
+    public interface PathFinishConsumer {
+        void accept(GraphNode node);
     }
 }

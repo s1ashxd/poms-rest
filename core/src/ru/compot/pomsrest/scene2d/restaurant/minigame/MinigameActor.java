@@ -1,5 +1,9 @@
 package ru.compot.pomsrest.scene2d.restaurant.minigame;
 
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import ru.compot.pomsrest.ashley.components.FoodComponent;
+import ru.compot.pomsrest.ashley.utils.constants.Mappers;
+import ru.compot.pomsrest.ashley.utils.factory.EntityFactory;
 import ru.compot.pomsrest.scene2d.restaurant.RecipeData;
+import ru.compot.pomsrest.screens.restaurant.RestaurantScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +33,10 @@ import static ru.compot.pomsrest.utils.constants.Assets.*;
 
 public class MinigameActor extends Actor {
 
-    private static final int IDLE = 0, NORMAL = 1, SHIT = 2;
+    private static final int NORMAL = 1, SHIT = 2;
 
     private final ShapeRenderer renderer = new ShapeRenderer();
     private final Group children = new Group();
-    private final Map<String, Image> map = new HashMap<>();
     private final TextureAtlas atlas = getAsset(MINIGAME_ATLAS);
     private final TextureRegion background = new TextureRegion((Texture) getAsset(MINIGAME_BACKGROUND));
     private final TextureRegion normalFood = atlas.findRegion(NORMAL_FOOD);
@@ -38,47 +45,80 @@ public class MinigameActor extends Actor {
     private final List<String> ingredients = new ArrayList<>();
     private int cookingState;
 
-    public MinigameActor(RecipeData recipe) {
+    public MinigameActor(RecipeData recipe, RestaurantScreen screen, boolean[] tableCellsAccess, Engine engine, float tableX, float tableY) {
         this.recipe = recipe;
-        map.put("ice_cream",      addListenerTo(new Image(atlas.findRegion(INGREDIENT_ICE_CREAM)), new MinigameListener(INGREDIENT_ICE_CREAM, this)));
-        map.put("tomato",         addListenerTo(new Image(atlas.findRegion(INGREDIENT_TOMATO)), new MinigameListener(INGREDIENT_TOMATO, this)));
-        map.put("wine",           addListenerTo(new Image(atlas.findRegion(INGREDIENT_WINE)), new MinigameListener(INGREDIENT_WINE, this)));
-        map.put("octopus",        addListenerTo(new Image(atlas.findRegion(INGREDIENT_OCTOPUS)), new MinigameListener(INGREDIENT_OCTOPUS, this)));
-        map.put("whipping_cream", addListenerTo(new Image(atlas.findRegion(INGREDIENT_WHIPPING_CREAM)), new MinigameListener(INGREDIENT_WHIPPING_CREAM, this)));
-        map.put("egg",            addListenerTo(new Image(atlas.findRegion(INGREDIENT_EGG)), new MinigameListener(INGREDIENT_EGG, this)));
-        map.put("lemon",          addListenerTo(new Image(atlas.findRegion(INGREDIENT_LEMON)), new MinigameListener(INGREDIENT_LEMON, this)));
-        map.put("biscuit",        addListenerTo(new Image(atlas.findRegion(INGREDIENT_BISCUIT)), new MinigameListener(INGREDIENT_BISCUIT, this)));
-        map.put("chicken",        addListenerTo(new Image(atlas.findRegion(INGREDIENT_CHICKEN)), new MinigameListener(INGREDIENT_CHICKEN, this)));
-        map.put("curd",           addListenerTo(new Image(atlas.findRegion(INGREDIENT_CURD)), new MinigameListener(INGREDIENT_CURD, this)));
-        map.put("lobster",        addListenerTo(new Image(atlas.findRegion(INGREDIENT_LOBSTER)), new MinigameListener(INGREDIENT_LOBSTER, this)));
-        map.put("cherry",         addListenerTo(new Image(atlas.findRegion(INGREDIENT_CHERRY)), new MinigameListener(INGREDIENT_CHERRY, this)));
-        map.put("topping",        addListenerTo(new Image(atlas.findRegion(INGREDIENT_TOPPING)), new MinigameListener(INGREDIENT_TOPPING, this)));
-        map.put("flour",          addListenerTo(new Image(atlas.findRegion(INGREDIENT_FLOUR)), new MinigameListener(INGREDIENT_FLOUR, this)));
-        map.put("mussel",         addListenerTo(new Image(atlas.findRegion(INGREDIENT_MUSSEL)), new MinigameListener(INGREDIENT_MUSSEL, this)));
-        map.put("crackers",       addListenerTo(new Image(atlas.findRegion(INGREDIENT_CRACKERS)), new MinigameListener(INGREDIENT_CRACKERS, this)));
-        map.put("spices",         addListenerTo(new Image(atlas.findRegion(INGREDIENT_SPICES)), new MinigameListener(INGREDIENT_SPICES, this)));
-        map.put("juice",          addListenerTo(new Image(atlas.findRegion(INGREDIENT_JUICE)), new MinigameListener(INGREDIENT_JUICE, this)));
-        map.put("shrimp",         addListenerTo(new Image(atlas.findRegion(INGREDIENT_SHRIMP)), new MinigameListener(INGREDIENT_SHRIMP, this)));
-        map.put("onion",          addListenerTo(new Image(atlas.findRegion(INGREDIENT_ONION)), new MinigameListener(INGREDIENT_ONION, this)));
-        map.put("puff_pastry",    addListenerTo(new Image(atlas.findRegion(INGREDIENT_PUFF_PASTRY)), new MinigameListener(INGREDIENT_PUFF_PASTRY, this)));
-        map.put("sugar",          addListenerTo(new Image(atlas.findRegion(INGREDIENT_SUGAR)), new MinigameListener(INGREDIENT_SUGAR, this)));
+        Map<String, Image> map = new HashMap<>();
+        map.put(INGREDIENT_ICE_CREAM, addListenerTo(new Image(atlas.findRegion(INGREDIENT_ICE_CREAM)), new MinigameListener(INGREDIENT_ICE_CREAM, this)));
+        map.put(INGREDIENT_TOMATO, addListenerTo(new Image(atlas.findRegion(INGREDIENT_TOMATO)), new MinigameListener(INGREDIENT_TOMATO, this)));
+        map.put(INGREDIENT_WINE, addListenerTo(new Image(atlas.findRegion(INGREDIENT_WINE)), new MinigameListener(INGREDIENT_WINE, this)));
+        map.put(INGREDIENT_OCTOPUS, addListenerTo(new Image(atlas.findRegion(INGREDIENT_OCTOPUS)), new MinigameListener(INGREDIENT_OCTOPUS, this)));
+        map.put(INGREDIENT_WHIPPING_CREAM, addListenerTo(new Image(atlas.findRegion(INGREDIENT_WHIPPING_CREAM)), new MinigameListener(INGREDIENT_WHIPPING_CREAM, this)));
+        map.put(INGREDIENT_EGG, addListenerTo(new Image(atlas.findRegion(INGREDIENT_EGG)), new MinigameListener(INGREDIENT_EGG, this)));
+        map.put(INGREDIENT_LEMON, addListenerTo(new Image(atlas.findRegion(INGREDIENT_LEMON)), new MinigameListener(INGREDIENT_LEMON, this)));
+        map.put(INGREDIENT_BISCUIT, addListenerTo(new Image(atlas.findRegion(INGREDIENT_BISCUIT)), new MinigameListener(INGREDIENT_BISCUIT, this)));
+        map.put(INGREDIENT_CHICKEN, addListenerTo(new Image(atlas.findRegion(INGREDIENT_CHICKEN)), new MinigameListener(INGREDIENT_CHICKEN, this)));
+        map.put(INGREDIENT_CURD, addListenerTo(new Image(atlas.findRegion(INGREDIENT_CURD)), new MinigameListener(INGREDIENT_CURD, this)));
+        map.put(INGREDIENT_LOBSTER, addListenerTo(new Image(atlas.findRegion(INGREDIENT_LOBSTER)), new MinigameListener(INGREDIENT_LOBSTER, this)));
+        map.put(INGREDIENT_CHERRY, addListenerTo(new Image(atlas.findRegion(INGREDIENT_CHERRY)), new MinigameListener(INGREDIENT_CHERRY, this)));
+        map.put(INGREDIENT_TOPPING, addListenerTo(new Image(atlas.findRegion(INGREDIENT_TOPPING)), new MinigameListener(INGREDIENT_TOPPING, this)));
+        map.put(INGREDIENT_FLOUR, addListenerTo(new Image(atlas.findRegion(INGREDIENT_FLOUR)), new MinigameListener(INGREDIENT_FLOUR, this)));
+        map.put(INGREDIENT_MUSSEL, addListenerTo(new Image(atlas.findRegion(INGREDIENT_MUSSEL)), new MinigameListener(INGREDIENT_MUSSEL, this)));
+        map.put(INGREDIENT_CRACKERS, addListenerTo(new Image(atlas.findRegion(INGREDIENT_CRACKERS)), new MinigameListener(INGREDIENT_CRACKERS, this)));
+        map.put(INGREDIENT_SPICES, addListenerTo(new Image(atlas.findRegion(INGREDIENT_SPICES)), new MinigameListener(INGREDIENT_SPICES, this)));
+        map.put(INGREDIENT_JUICE, addListenerTo(new Image(atlas.findRegion(INGREDIENT_JUICE)), new MinigameListener(INGREDIENT_JUICE, this)));
+        map.put(INGREDIENT_SHRIMP, addListenerTo(new Image(atlas.findRegion(INGREDIENT_SHRIMP)), new MinigameListener(INGREDIENT_SHRIMP, this)));
+        map.put(INGREDIENT_ONION, addListenerTo(new Image(atlas.findRegion(INGREDIENT_ONION)), new MinigameListener(INGREDIENT_ONION, this)));
+        map.put(INGREDIENT_PUFF_PASTRY, addListenerTo(new Image(atlas.findRegion(INGREDIENT_PUFF_PASTRY)), new MinigameListener(INGREDIENT_PUFF_PASTRY, this)));
+        map.put(INGREDIENT_SUGAR, addListenerTo(new Image(atlas.findRegion(INGREDIENT_SUGAR)), new MinigameListener(INGREDIENT_SUGAR, this)));
         setPosition(Gdx.graphics.getWidth() / 2f - background.getRegionWidth() / 2f, Gdx.graphics.getHeight() / 2f - background.getRegionHeight() / 2f);
         float comX = 10f, comY = 10f;
         for (Map.Entry<String, Image> entry : map.entrySet()) {
             Image com = entry.getValue();
             children.addActor(com);
-            if (entry.getKey().equals("lobster")) {
-                com.setPosition(380 - com.getWidth(), 30);
+            if (entry.getKey().equals(INGREDIENT_LOBSTER)) {
+                com.setPosition(380f - com.getWidth(), 30f);
                 continue;
             }
-            com.setPosition(5 + comX, comY);
-            comX += com.getWidth()+5;
-            if (comX > 370 - com.getWidth()) {
+            com.setPosition(5f + comX, comY);
+            if (comX + com.getWidth() + 5f > 370f - com.getWidth()) {
                 comX = 10f;
                 comY += com.getHeight();
-                com.setPosition(5 + comX, comY);
+                com.setPosition(5f + comX, comY);
             }
+            comX += com.getWidth() + 5f;
         }
+        Image exit = new Image(atlas.findRegion(MINIGAME_EXIT));
+        exit.setPosition(background.getRegionWidth(), background.getRegionHeight() - exit.getImageHeight() - 5f);
+        exit.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (cookingState == NORMAL && ingredients.size() >= recipe.getRecipeComponents().length) {
+                    boolean spawned = false;
+                    for (int i = 0; i < tableCellsAccess.length; i++) {
+                        boolean cell = tableCellsAccess[i];
+                        if (!cell) {
+                            EntityFactory.createFoodEntity(engine, tableX, tableY, recipe, i);
+                            tableCellsAccess[i] = true;
+                            spawned = true;
+                            break;
+                        }
+                    }
+                    if (!spawned) {
+                        tableCellsAccess[tableCellsAccess.length - 1] = true;
+                        ImmutableArray<Entity> foods = engine.getEntitiesFor(Family.all(FoodComponent.class).get());
+                        for (int j = 0; j < foods.size(); j++) {
+                            Entity f = foods.get(j);
+                            FoodComponent fc = Mappers.FOOD_MAPPER.get(f);
+                            if (fc.position == tableCellsAccess.length - 1) engine.removeEntity(f);
+                        }
+                        EntityFactory.createFoodEntity(engine, tableX, tableY, recipe, tableCellsAccess.length - 1);
+                    }
+                }
+                screen.closeUI();
+                screen.openRecipeBook();
+            }
+        });
+        children.addActor(exit);
     }
 
     private static Image addListenerTo(Image actor, ClickListener listener) {
@@ -107,10 +147,10 @@ public class MinigameActor extends Actor {
         batch.draw(background, actorX, actorY);
         switch (cookingState) {
             case NORMAL:
-                batch.draw(normalFood, actorX+160, actorY+350);
+                batch.draw(normalFood, actorX + 160, actorY + 350);
                 break;
             case SHIT:
-                batch.draw(shitFood, actorX+153, actorY+345);
+                batch.draw(shitFood, actorX + 153, actorY + 345);
                 break;
         }
     }
@@ -126,12 +166,14 @@ public class MinigameActor extends Actor {
     public void onAddIngredient() {
         cookingState = NORMAL;
         for (String ing : ingredients) {
+            boolean normal = false;
             for (RecipeData.RecipeComponent rc : recipe.getRecipeComponents()) {
-                if (!rc.id.equals(ing)) {
-                    cookingState = SHIT;
-                    return;
+                if (rc.id.equals(ing)) {
+                    normal = true;
+                    break;
                 }
             }
+            if (!normal) cookingState = SHIT;
         }
     }
 }

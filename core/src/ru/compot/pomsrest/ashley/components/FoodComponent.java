@@ -2,13 +2,14 @@ package ru.compot.pomsrest.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
+import ru.compot.pomsrest.scene2d.restaurant.RecipeData;
 
 public class FoodComponent implements Component, Pool.Poolable {
 
-    public int food;
-    public int index;
+    public RecipeData recipe;
+    public int position;
+    public float positionX, positionY;
     public boolean dragging;
-    public float initialX, initialY;
 
     @Override
     public void reset() {

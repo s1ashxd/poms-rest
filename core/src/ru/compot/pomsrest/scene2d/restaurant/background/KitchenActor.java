@@ -1,12 +1,8 @@
 package ru.compot.pomsrest.scene2d.restaurant.background;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import ru.compot.pomsrest.GameCore;
-import ru.compot.pomsrest.utils.constants.Assets;
 
 public class KitchenActor extends Actor {
 

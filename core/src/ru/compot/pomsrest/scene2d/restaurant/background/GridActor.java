@@ -1,16 +1,10 @@
 package ru.compot.pomsrest.scene2d.restaurant.background;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class GridActor extends Actor {
-
-    private static final float CELL_WIDTH = 47f, CELL_HEIGHT = 24f;
-
     private final TextureRegion region;
     private int horCells, vertCells;
 

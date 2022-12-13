@@ -13,8 +13,6 @@ public class FoodSystem extends IteratingSystem {
     private final Entity player;
     private final NPCSystem npcSystem;
 
-    private final boolean[] places = new boolean[5];
-
     public FoodSystem(Entity player, NPCSystem npcSystem) {
         super(Family.all(TransformComponent.class, FoodComponent.class).get());
         this.player = player;
@@ -31,12 +29,8 @@ public class FoodSystem extends IteratingSystem {
             foodTransform.x = playerData.mousePoint.x;
             foodTransform.y = playerData.mousePoint.y;
         } else {
-            npcSystem.setInteractData(playerData.mousePoint.x, playerData.mousePoint.y, fc);
+            npcSystem.setInteractFoodEntity(foodTransform, fc);
             fc.dragging = false;
         }
-    }
-
-    public boolean[] getPlaces() {
-        return places;
     }
 }

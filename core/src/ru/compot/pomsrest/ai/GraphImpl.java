@@ -42,6 +42,15 @@ public class GraphImpl implements IndexedGraph<GraphNode> {
         return node;
     }
 
+    private static void checkDirectConnection(Rectangle[] obstacles, GraphNode start, GraphNode end) {
+        for (Rectangle rect : obstacles) {
+            if (Intersector.intersectSegmentRectangle(start.getX(), start.getY(), end.getX(), end.getY(), rect))
+                return;
+        }
+        start.connect(end);
+        end.connect(start);
+    }
+
     @Override
     public int getIndex(GraphNode node) {
         if (node == start) return 0;
@@ -83,14 +92,5 @@ public class GraphImpl implements IndexedGraph<GraphNode> {
                 node.removeConnection(end);
             }
         }
-    }
-
-    private static void checkDirectConnection(Rectangle[] obstacles, GraphNode start, GraphNode end) {
-        for (Rectangle rect : obstacles) {
-            if (Intersector.intersectSegmentRectangle(start.getX(), start.getY(), end.getX(), end.getY(), rect))
-                return;
-        }
-        start.connect(end);
-        end.connect(start);
     }
 }

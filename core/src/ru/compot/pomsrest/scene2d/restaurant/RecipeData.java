@@ -3,12 +3,13 @@ package ru.compot.pomsrest.scene2d.restaurant;
 public class RecipeData {
 
     private final String title;
-    private final String atlasRegion;
+    private final String defaultRegion, miniRegion;
     private final RecipeComponent[] recipeComponents;
 
-    public RecipeData(String title, String atlasRegion, RecipeComponent[] recipeComponents) {
+    public RecipeData(String title, String defaultRegion, String miniRegion, RecipeComponent[] recipeComponents) {
         this.title = title;
-        this.atlasRegion = atlasRegion;
+        this.defaultRegion = defaultRegion;
+        this.miniRegion = miniRegion;
         this.recipeComponents = recipeComponents;
     }
 
@@ -16,8 +17,12 @@ public class RecipeData {
         return title;
     }
 
-    public String getAtlasRegion() {
-        return atlasRegion;
+    public String getDefaultRegion() {
+        return defaultRegion;
+    }
+
+    public String getMiniRegion() {
+        return miniRegion;
     }
 
     public RecipeComponent[] getRecipeComponents() {

@@ -13,7 +13,6 @@ public class GameCore {
     public static final float SCREEN_WIDTH = 350f;
     public static final float SCREEN_HEIGHT = 700f;
     public static final float CAMERA_WIDTH = SCREEN_WIDTH / 2f;
-    public static final float CAMERA_HEIGHT = SCREEN_HEIGHT / 2f;
 
     public final PlayerConfig playerConfig = new PlayerConfig();
     private final AssetManager assetManager = new AssetManager();
@@ -31,6 +30,9 @@ public class GameCore {
         assetManager.load(UI_SKIN, SKIN);
         assetManager.load(MINIGAME_ATLAS, TEXTURE_ATLAS);
         assetManager.load(MINIGAME_BACKGROUND, TEXTURE);
+        assetManager.load(NPC_ATLAS, TEXTURE_ATLAS);
+        assetManager.load(RECIPE_BOOK_EXIT, TEXTURE);
+        assetManager.load(MINI_RECIPES_ATLAS, TEXTURE_ATLAS);
         assetManager.finishLoading();
     }
 

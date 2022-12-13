@@ -1,62 +1,62 @@
 
-recipes.png
-size: 2048, 256
+mini-recipes.png
+size: 512, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 buyabes
   rotate: false
   xy: 2, 2
-  size: 236, 186
-  orig: 236, 186
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 caesar
   rotate: false
-  xy: 240, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 46, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 lobster
   rotate: false
-  xy: 954, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 222, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 macaroon
   rotate: false
-  xy: 716, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 178, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 mulled-wine
   rotate: false
-  xy: 1192, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 266, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
-shtrudel
+strudel
   rotate: false
-  xy: 1430, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 134, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 takoyaki
   rotate: false
-  xy: 478, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 90, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1
 triful
   rotate: false
-  xy: 1668, 2
-  size: 236, 186
-  orig: 236, 186
+  xy: 310, 2
+  size: 42, 21
+  orig: 42, 21
   offset: 0, 0
   index: -1

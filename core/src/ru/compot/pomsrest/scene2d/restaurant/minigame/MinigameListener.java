@@ -15,8 +15,10 @@ public class MinigameListener extends ClickListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        actor.getIngredients().add(componentID);
-        actor.onAddIngredient();
+        if (!actor.getIngredients().contains(componentID)) {
+            actor.getIngredients().add(componentID);
+            actor.onAddIngredient();
+        }
         return true;
     }
 }
