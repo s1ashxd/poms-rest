@@ -5,6 +5,7 @@ import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 
 import java.util.Comparator;
 
+// штука сортирующая текстуры по их слою
 public class LayerComparator implements Comparator<Entity> {
 
     public static final LayerComparator INSTANCE = new LayerComparator();

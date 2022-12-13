@@ -14,6 +14,7 @@ import ru.compot.pomsrest.utils.Animated2DCamera;
 import ru.compot.pomsrest.utils.constants.AnimationIDs;
 import ru.compot.pomsrest.utils.constants.OtherConstants;
 
+// слушатель нажатия в мире
 public class WorldInputListener extends InputListener {
 
     private final Entity player;

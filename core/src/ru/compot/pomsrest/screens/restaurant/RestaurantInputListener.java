@@ -22,6 +22,7 @@ import ru.compot.pomsrest.utils.constants.AnimationIDs;
 
 import java.util.Iterator;
 
+// слушатель нажатий в ресторане
 public class RestaurantInputListener extends InputListener {
 
     private final Entity player;

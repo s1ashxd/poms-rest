@@ -27,6 +27,7 @@ import ru.compot.pomsrest.screens.GameScreen;
 import ru.compot.pomsrest.utils.Animated2DCamera;
 import ru.compot.pomsrest.utils.constants.Assets;
 
+// экран ресторана
 public class RestaurantScreen extends GameScreen {
     private static final float STAIRS_Y = 190f;
 

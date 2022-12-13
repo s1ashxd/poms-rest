@@ -20,6 +20,7 @@ import ru.compot.pomsrest.utils.constants.AnimationIDs;
 
 import static ru.compot.pomsrest.utils.constants.Assets.*;
 
+// методы для создания энтити
 public class EntityFactory {
 
     private EntityFactory() {

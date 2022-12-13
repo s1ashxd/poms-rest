@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+// сетка, ячейка которой - текстура
+// с помощью этого сделаны полы в ресторане
 public class GridActor extends Actor {
     private final TextureRegion region;
     private int horCells, vertCells;

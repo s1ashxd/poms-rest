@@ -7,6 +7,7 @@ import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformAnimationComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 
+// штуки для получения компонентов из энтити
 public class Mappers {
 
     public static final ComponentMapper<TransformComponent> TRANSFORM_MAPPER = ComponentMapper.getFor(TransformComponent.class);

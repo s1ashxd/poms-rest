@@ -1,5 +1,6 @@
 package ru.compot.pomsrest.utils.constants;
 
+// ключи анимаций
 public class AnimationIDs {
 
     public static final byte PLAYER_RIGHT_RUNNING = 0;

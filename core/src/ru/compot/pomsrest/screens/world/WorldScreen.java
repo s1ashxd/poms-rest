@@ -12,6 +12,7 @@ import ru.compot.pomsrest.screens.GameScreen;
 import ru.compot.pomsrest.utils.Animated2DCamera;
 import ru.compot.pomsrest.utils.constants.Assets;
 
+// мир
 public class WorldScreen extends GameScreen {
 
     public static final float WORLD_WIDTH = 3332f;

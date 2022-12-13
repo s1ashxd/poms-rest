@@ -8,6 +8,12 @@ public class AtlasUtils {
     private AtlasUtils() {
     }
 
+    /**
+     * вернет набор картинок из пакета
+     * @param atlas
+     * @param name
+     * @return
+     */
     public static Array<TextureAtlas.AtlasRegion> findRegionFolder(TextureAtlas atlas, String name) {
         Array<TextureAtlas.AtlasRegion> result = new Array<>();
         Array<TextureAtlas.AtlasRegion> regions = atlas.getRegions();

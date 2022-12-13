@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import ru.compot.pomsrest.utils.constants.OtherConstants;
 
+// анимированная камера
 public class Animated2DCamera extends OrthographicCamera {
 
     private Vector2Animation animation;

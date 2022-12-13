@@ -11,6 +11,7 @@ import ru.compot.pomsrest.ashley.systems.animations.TransformAnimationSystem;
 import ru.compot.pomsrest.ashley.systems.render.RenderSystem;
 import ru.compot.pomsrest.scene2d.TransitionActor;
 
+// абстракный класс экрана
 public abstract class GameScreen extends ScreenAdapter {
 
     protected final SpriteBatch batch = new SpriteBatch();

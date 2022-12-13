@@ -22,6 +22,7 @@ import ru.compot.pomsrest.scene2d.restaurant.RecipesRegistry;
 import ru.compot.pomsrest.screens.restaurant.RestaurantScreen;
 import ru.compot.pomsrest.utils.constants.Assets;
 
+// книга рецептов
 public class RecipeBookActor extends Actor {
 
     private final ShapeRenderer renderer = new ShapeRenderer();

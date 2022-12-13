@@ -8,6 +8,7 @@ import ru.compot.pomsrest.ashley.components.PlayerComponent;
 import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 
+// система взамимодействия с едой
 public class FoodSystem extends IteratingSystem {
 
     private final Entity player;

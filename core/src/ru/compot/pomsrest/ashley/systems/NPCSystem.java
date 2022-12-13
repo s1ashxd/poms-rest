@@ -21,6 +21,7 @@ import ru.compot.pomsrest.utils.constants.AnimationIDs;
 
 import java.util.Iterator;
 
+// система нпс
 public class NPCSystem extends IteratingSystem {
 
     public static final long SPAWN_RATE = 20000L;

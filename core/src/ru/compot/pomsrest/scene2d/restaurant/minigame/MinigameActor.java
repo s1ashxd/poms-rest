@@ -31,6 +31,7 @@ import java.util.Map;
 
 import static ru.compot.pomsrest.utils.constants.Assets.*;
 
+// миниигра
 public class MinigameActor extends Actor {
 
     private static final int NORMAL = 1, SHIT = 2;

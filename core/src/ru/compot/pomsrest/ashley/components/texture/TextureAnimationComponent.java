@@ -7,14 +7,20 @@ import com.badlogic.gdx.utils.Pool;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+// компонент анимации текстуры
 public class TextureAnimationComponent implements Component, Pool.Poolable {
 
-    public final ConcurrentHashMap<Integer, AnimationData> animations = new ConcurrentHashMap<>();
-    public Animation<TextureRegion> currentAnimation;
-    public TextureRegion idleTexture;
-    public float estimatedTime;
-    public boolean looping;
+    public final ConcurrentHashMap<Integer, AnimationData> animations = new ConcurrentHashMap<>(); // карта с инфорацией о каждой анимации
+    public Animation<TextureRegion> currentAnimation; // текущая проигрывающаяся анимаци
+    public TextureRegion idleTexture; // текстура при паузе или конце анимации
+    public float estimatedTime; // сколько времени прошло после старта анимации
+    public boolean looping; // должна ли вечно повторяться анимация
 
+    /**
+     * анимируем ентити
+     * @param id ключ анимации
+     * @param looping должна ли анимка повторяться вечно
+     */
     public void animate(int id, boolean looping) {
         this.reset();
         AnimationData data = animations.get(id);
@@ -23,10 +29,19 @@ public class TextureAnimationComponent implements Component, Pool.Poolable {
         this.looping = looping;
     }
 
+    /**
+     * добавляет анимацию в карту
+     * @param id ключ анимации
+     * @param region скорость кадра и кадры анимации
+     * @param idleTexture текстура стопа анимации
+     */
     public void add(int id, Animation<TextureRegion> region, TextureRegion idleTexture) {
         animations.put(id, new AnimationData(region, idleTexture));
     }
 
+    /**
+     * останавливает все анимации
+     */
     @Override
     public void reset() {
         currentAnimation = null;
@@ -34,9 +49,12 @@ public class TextureAnimationComponent implements Component, Pool.Poolable {
         looping = false;
     }
 
+    /**
+     * класс хранящий основную инфу о анимации
+     */
     public static class AnimationData {
-        public final Animation<TextureRegion> animation;
-        public final TextureRegion idleTexture;
+        public final Animation<TextureRegion> animation; // скорость кадра и кадры
+        public final TextureRegion idleTexture; // текстура стопа
 
         public AnimationData(Animation<TextureRegion> animation, TextureRegion idleTexture) {
             this.animation = animation;

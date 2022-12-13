@@ -3,6 +3,7 @@ package ru.compot.pomsrest.ashley.components.transform;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
 
+// класс содержащий позицию и размер энтити на экране
 public class TransformComponent implements Component, Pool.Poolable {
 
     public float x, y;

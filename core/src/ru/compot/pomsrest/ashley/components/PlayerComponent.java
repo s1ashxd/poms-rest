@@ -8,13 +8,13 @@ import ru.compot.pomsrest.utils.Animated2DCamera;
 
 public class PlayerComponent implements Component, Pool.Poolable {
 
-    public final Vector2 interactPoint = new Vector2();
-    public final Vector2 mousePoint = new Vector2();
-    public boolean dragging;
-    public Screen screen;
-    public Animated2DCamera camera;
-    public boolean interactRequested;
-    public boolean moveBlocked;
+    public final Vector2 interactPoint = new Vector2(); // точка взаимодействия с экраном
+    public final Vector2 mousePoint = new Vector2(); // текущая позиция мыши
+    public boolean dragging; // зажата ли левая кнопка мыши сейчас
+    public Screen screen; // экран где находится плеер
+    public Animated2DCamera camera; // камера плеера
+    public boolean interactRequested; // запрошено ли взаимодействие
+    public boolean moveBlocked; // передвижение отключено
 
     @Override
     public void reset() {
@@ -24,6 +24,11 @@ public class PlayerComponent implements Component, Pool.Poolable {
         dragging = false;
     }
 
+    /**
+     * запрашивает взаимодействие
+     * @param x
+     * @param y
+     */
     public void interact(float x, float y) {
         interactPoint.set(x, y);
         interactRequested = true;

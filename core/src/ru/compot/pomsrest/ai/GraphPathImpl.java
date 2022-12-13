@@ -7,9 +7,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+// результат алгоритма поиска наикратчайшего пути
 public class GraphPathImpl implements GraphPath<GraphNode> {
 
-    private final List<GraphNode> nodes = new ArrayList<>();
+    private final List<GraphNode> nodes = new ArrayList<>(); // лист точек наикратчашего пути
 
     @Override
     public int getCount() {

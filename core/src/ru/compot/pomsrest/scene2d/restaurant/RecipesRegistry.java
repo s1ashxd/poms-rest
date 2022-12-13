@@ -2,6 +2,8 @@ package ru.compot.pomsrest.scene2d.restaurant;
 
 import static ru.compot.pomsrest.utils.constants.Assets.*;
 
+
+// все рецепты
 public class RecipesRegistry {
     public static final RecipeData BUYABES = new RecipeData(
             "Буйабес",

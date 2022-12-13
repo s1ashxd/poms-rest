@@ -8,6 +8,7 @@ import ru.compot.pomsrest.ashley.components.texture.TextureComponent;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
+// система анимации текстуры
 public class TextureAnimationSystem extends IteratingSystem {
     public TextureAnimationSystem() {
         super(Family.all(TextureComponent.class, TextureAnimationComponent.class).get(), Priorities.TEXTURE_ANIMATION_SYSTEM);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import ru.compot.pomsrest.Application;
 import ru.compot.pomsrest.screens.GameScreen;
 
+// переход между экранами
 public class TransitionActor extends Actor {
 
     private static final float TRANSITION_DURATION = .8f;

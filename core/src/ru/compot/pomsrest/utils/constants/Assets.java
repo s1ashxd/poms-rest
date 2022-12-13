@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ru.compot.pomsrest.GameCore;
 
+// все названия текстур
 public class Assets {
 
     public static final float PLAYER_FRAME_DURATION = .3f;

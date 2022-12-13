@@ -11,6 +11,7 @@ import ru.compot.pomsrest.ashley.utils.comparators.InteractComparator;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
+// система взаимодействий
 public class InteractSystem extends SortedIteratingSystem {
 
     private final Entity player;

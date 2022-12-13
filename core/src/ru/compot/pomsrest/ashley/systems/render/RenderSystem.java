@@ -10,6 +10,7 @@ import ru.compot.pomsrest.ashley.utils.comparators.LayerComparator;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
+// система отрисовки текстур
 public class RenderSystem extends SortedIteratingSystem {
 
     private final SpriteBatch batch;

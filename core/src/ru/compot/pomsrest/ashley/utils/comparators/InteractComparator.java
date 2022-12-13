@@ -5,6 +5,7 @@ import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 
 import java.util.Comparator;
 
+// штука сотирующая области взаимодецствия по их приоритету
 public class InteractComparator implements Comparator<Entity> {
 
     public static final InteractComparator INSTANCE = new InteractComparator();

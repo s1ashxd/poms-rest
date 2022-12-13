@@ -3,6 +3,7 @@ package ru.compot.pomsrest.scene2d.restaurant.minigame;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+// слушатель нажатия для ингридиента
 public class MinigameListener extends ClickListener {
 
     private final String componentID;

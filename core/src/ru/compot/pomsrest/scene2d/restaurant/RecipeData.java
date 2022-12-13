@@ -1,5 +1,6 @@
 package ru.compot.pomsrest.scene2d.restaurant;
 
+// инфа о рецепте
 public class RecipeData {
 
     private final String title;

@@ -10,6 +10,7 @@ import ru.compot.pomsrest.ashley.utils.TransformAnimationData;
 import ru.compot.pomsrest.ashley.utils.constants.Mappers;
 import ru.compot.pomsrest.ashley.utils.constants.Priorities;
 
+// система анимации позиции
 public class TransformAnimationSystem extends IteratingSystem {
 
     public TransformAnimationSystem() {

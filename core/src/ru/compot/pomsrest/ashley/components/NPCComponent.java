@@ -7,14 +7,14 @@ import ru.compot.pomsrest.scene2d.restaurant.RecipeData;
 
 public class NPCComponent implements Component, Pool.Poolable {
 
-    public float targetX, targetY;
-    public float xSitOffset, ySitOffset;
-    public RecipeData food;
-    public long lastTimeSpawn;
-    public boolean spawned;
-    public Entity cloud;
+    public float targetX, targetY; // в какую точку идет нпс
+    public float xSitOffset, ySitOffset; // отступы от конца дивана
+    public RecipeData food; // какую еду хочет
+    public long lastTimeSpawn; // последнее время спавна
+    public boolean spawned; // заспавлен ли нпс
+    public Entity cloud; // энтити облако
 
-    public long startTimeEat = -1L;
+    public long startTimeEat = -1L; // когда начал есть, -1 если не ел после появления
 
     @Override
     public void reset() {

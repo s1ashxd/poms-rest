@@ -10,6 +10,7 @@ import ru.compot.pomsrest.ashley.components.transform.TransformComponent;
 
 import java.util.ArrayList;
 
+// штука упрощающая создание энтити
 public class EntityBuilder {
 
     private final Engine engine;

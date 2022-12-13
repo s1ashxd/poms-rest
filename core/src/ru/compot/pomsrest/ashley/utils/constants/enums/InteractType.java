@@ -16,6 +16,7 @@ import ru.compot.pomsrest.utils.constants.OtherConstants;
 
 import java.util.Iterator;
 
+// типы взаимодействий
 public enum InteractType {
     WORLD_ENTER_AREA((player, collider) -> {
         PlayerComponent playerData = Mappers.PLAYER_MAPPER.get(player);
